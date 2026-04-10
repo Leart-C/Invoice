@@ -24,6 +24,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'admin@invoice.com',
             'password' => null,
             'role' => 'admin',
+            'google_id' => null,
+            'avatar'    => null,
         ]);
 
         $clients = Client::factory()->count(10)->create();
