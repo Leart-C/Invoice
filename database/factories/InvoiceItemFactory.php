@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Invoice;
 use App\Models\InvoiceItem;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -17,8 +18,15 @@ class InvoiceItemFactory extends Factory
      */
     public function definition(): array
     {
+        $quantity   = fake()->numberBetween(1, 10);
+        $unit_price = fake()->randomFloat(2, 10, 500);
+
         return [
-            //
+            'invoice_id'  => Invoice::factory(),
+            'description' => fake()->sentence(3),
+            'quantity'    => $quantity,
+            'unit_price'  => $unit_price,
+            'total'       => round($quantity * $unit_price, 2),
         ];
     }
 }

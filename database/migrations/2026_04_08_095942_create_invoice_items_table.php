@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('invoice_id')->constrained('invoices')->onDelete('cascade');
             $table->string('description');
-            $table->integer('quantity', 8, 2)->default(1);
+            $table->integer('quantity')->default(1);
             $table->decimal('unit_price', 10, 2)->default(0);
             $table->decimal('total', 10, 2)->default(0);
             $table->timestamps();
