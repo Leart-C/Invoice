@@ -5,12 +5,18 @@
 
     <div class="bg-white rounded-xl border border-gray-200 p-6 max-w-md">
         <div class="flex items-center gap-4">
-            <img src="{{ auth()->user()->avatar }}" 
-                 class="w-14 h-14 rounded-full border border-gray-200">
+            @if(auth()->user()->avatar)
+                <img src="{{ auth()->user()->avatar }}" class="rounded-full" style="width:48px;height:48px">
+            @else
+                <div style="width:48px;height:48px;border-radius:50%"
+                     class="bg-blue-100 flex items-center justify-center text-blue-600 font-bold">
+                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                </div>
+            @endif
             <div>
                 <p class="font-bold text-gray-800">{{ auth()->user()->name }}</p>
                 <p class="text-sm text-gray-500">{{ auth()->user()->email }}</p>
-                <span class="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded-full mt-1 inline-block">
+                <span class="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full capitalize">
                     {{ auth()->user()->role }}
                 </span>
             </div>
