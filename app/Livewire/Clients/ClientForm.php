@@ -9,10 +9,10 @@ class ClientForm extends Component
 {
     public ?Client $client = null;
 
-    public string $name         = '';
-    public string $email        = '';
-    public string $phone        = '';
-    public string $address      = '';
+    public string $name = '';
+    public string $email = '';
+    public string $phone = '';
+    public string $address = '';
     public string $company_name = '';
 
     
