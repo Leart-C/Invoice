@@ -23,6 +23,8 @@ class InvoiceDetail extends Component
 
     public function render()
     {
+        $this->invoice->refresh();
+        
         return view('livewire.invoices.invoice-detail', [
             'invoice'  => $this->invoice->load('client', 'items', 'payments'),
         ]);

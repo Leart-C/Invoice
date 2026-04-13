@@ -5,6 +5,13 @@
         </div>
     @endif
 
+    @if(in_array($invoice->status, ['sent', 'partial']) && auth()->user()->role !== 'viewer')
+        <a href="{{ route('payments.create', $invoice) }}"
+        style="padding:8px 16px; background:#7c3aed; color:white; border-radius:8px; font-size:13px; text-decoration:none; font-weight:500;">
+            Record Payment
+        </a>
+    @endif
+
     
     <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px;">
         <div>
@@ -106,25 +113,5 @@
         </table>
     </div>
 
-    
-    <div style="background:white; border:1px solid #e5e7eb; border-radius:12px; overflow:hidden;">
-        <div style="padding:16px 20px; border-bottom:1px solid #e5e7eb;">
-            <h2 style="font-size:15px; font-weight:600; color:#111827;">Payment History</h2>
-        </div>
-        @forelse($invoice->payments as $payment)
-            <div style="display:flex; align-items:center; justify-content:space-between; padding:12px 20px; border-bottom:1px solid #f3f4f6;">
-                <div>
-                    <p style="font-size:14px; font-weight:500; color:#111827;">${{ number_format($payment->amount, 2) }}</p>
-                    <p style="font-size:12px; color:#6b7280;">{{ ucfirst(str_replace('_', ' ', $payment->method)) }} — {{ $payment->payment_date->format('M d, Y') }}</p>
-                </div>
-                @if($payment->notes)
-                    <p style="font-size:13px; color:#6b7280;">{{ $payment->notes }}</p>
-                @endif
-            </div>
-        @empty
-            <div style="padding:32px; text-align:center; color:#9ca3af; font-size:14px;">
-                No payments recorded yet.
-            </div>
-        @endforelse
-    </div>
+    <livewire:payments.payment-list :invoiceId="$invoice->id" />
 </div>

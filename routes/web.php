@@ -21,18 +21,21 @@ Route::get('/auth/google/callback',[GoogleController::class, 'callback'])->name(
 Route::post('/logout',[GoogleController::class, 'logout'])->name('logout');
 
 //protected routes
-Route::middleware('auth')->group(function(){
-    Route::get('/dashboard',function(){
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', function () {
         return view('pages.dashboard');
     })->name('dashboard');
 
-    Route::get('/clients',fn()=>view('pages.clients.index'))->name('clients.index');
-    Route::get('/clients/create', fn()=>view('pages.clients.create'))->name('clients.create');
-    Route::get('/clients/{client}/edit',fn(Client $client) => view('pages.clients.edit',compact('client')))->name('client.edit');
-    Route::get('/clients/{client}', fn(Client $client) => view('pages.clients.profile',compact('client')))->name('clients.show');
+    // Clients
+    Route::get('/clients', fn() => view('pages.clients.index'))->name('clients.index');
+    Route::get('/clients/create', fn() => view('pages.clients.create'))->name('clients.create');
+    Route::get('/clients/{client}/edit', fn(Client $client) => view('pages.clients.edit', compact('client')))->name('client.edit');
+    Route::get('/clients/{client}', fn(Client $client) => view('pages.clients.profile', compact('client')))->name('clients.show');
 
+    // Invoices — specific routes FIRST, wildcard {invoice} LAST
     Route::get('/invoices', fn() => view('pages.invoices.index'))->name('invoices.index');
     Route::get('/invoices/create', fn() => view('pages.invoices.create'))->name('invoices.create');
     Route::get('/invoices/{invoice}/edit', fn(Invoice $invoice) => view('pages.invoices.edit', compact('invoice')))->name('invoices.edit');
+    Route::get('/invoices/{invoice}/pay', fn(Invoice $invoice) => view('pages.payments.create', compact('invoice')))->name('payments.create');
     Route::get('/invoices/{invoice}', fn(Invoice $invoice) => view('pages.invoices.detail', compact('invoice')))->name('invoices.show');
 });
