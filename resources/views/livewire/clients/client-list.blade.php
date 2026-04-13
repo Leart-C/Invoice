@@ -64,7 +64,7 @@
                         <td class="px-4 py-3">
                             @if(auth()->user()->role !== 'viewer')
                                 <div class="flex gap-2">
-                                    <a href="{{ route('clients.edit', $client) }}"
+                                    <a href="{{ route('client.edit', $client) }}"
                                        class="text-blue-600 hover:underline text-xs">Edit</a>
                                     <button wire:click="confirmDelete({{ $client->id }})"
                                             class="text-red-500 hover:underline text-xs">Delete</button>

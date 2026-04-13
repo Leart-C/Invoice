@@ -23,13 +23,7 @@ return [
             'active' => true,
             'icon'   => 'invoices',
         ],
-        [
-            'label'  => 'Payments',
-            'route'  => 'payments.index',
-            'match'  => 'payments.*',
-            'active' => false,
-            'icon'   => 'payments',
-        ],
+        
         
     ],
 ];
