@@ -20,7 +20,7 @@ return [
             'label'  => 'Invoices',
             'route'  => 'invoices.index',
             'match'  => 'invoices.*',
-            'active' => false,
+            'active' => true,
             'icon'   => 'invoices',
         ],
         [
@@ -30,5 +30,6 @@ return [
             'active' => false,
             'icon'   => 'payments',
         ],
+        
     ],
 ];
