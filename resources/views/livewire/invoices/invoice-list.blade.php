@@ -21,6 +21,7 @@
                 New Invoice
             </a>
         @endif
+        
     </div>
 
     
@@ -92,6 +93,12 @@
                             <div style="display:flex; gap:8px; align-items:center;">
                                 <a href="{{ route('invoices.show', $invoice) }}"
                                    style="font-size:13px; color:#6b7280; text-decoration:none;">View</a>
+
+                                   @can('downloadPdf',$invoice)
+                                        <a href="{{route('invoices.pdf',$invoice->id)}}">
+                                            PDF
+                                        </a>                                       
+                                   @endcan
 
                                 @if($invoice->canBeEdited())
                                     <a href="{{ route('invoices.edit', $invoice) }}"
