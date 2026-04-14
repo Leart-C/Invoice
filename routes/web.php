@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\InvoiceController;
 use App\Models\Client;
 use App\Models\Invoice;
 use Illuminate\Support\Facades\Route;
@@ -38,4 +39,5 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoices/{invoice}/edit', fn(Invoice $invoice) => view('pages.invoices.edit', compact('invoice')))->name('invoices.edit');
     Route::get('/invoices/{invoice}/pay', fn(Invoice $invoice) => view('pages.payments.create', compact('invoice')))->name('payments.create');
     Route::get('/invoices/{invoice}', fn(Invoice $invoice) => view('pages.invoices.detail', compact('invoice')))->name('invoices.show');
+    Route::get('invoices/{id}/pdf',[InvoiceController::class,'download'])->name('invoices.pdf');
 });

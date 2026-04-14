@@ -6,7 +6,6 @@
 
     <div style="background:white; border:1px solid #e5e7eb; border-radius:12px; padding:24px; margin-bottom:24px;">
 
-        
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px;">
 
             <div style="grid-column:span 2;">
