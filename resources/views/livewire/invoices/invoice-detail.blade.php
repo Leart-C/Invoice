@@ -12,6 +12,15 @@
         </a>
     @endif
 
+    @if(in_array($invoice->status, ['draft', 'sent']) && auth()->user()->role !== 'viewer')
+        <button wire:click="sendInvoice"
+                wire:loading.attr="disabled"
+                style="padding:8px 16px; background:#0f766e; color:white; border:none; border-radius:8px; font-size:13px; cursor:pointer; font-family:inherit; font-weight:500;">
+            <span wire:loading.remove wire:target="sendInvoice">Send Invoice</span>
+            <span wire:loading wire:target="sendInvoice">Sending...</span>
+        </button>
+    @endif
+
     
     <div style="display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:24px;">
         <div>

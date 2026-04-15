@@ -19,6 +19,15 @@ class InvoicePdfService
         return Pdf::loadView('pdf.invoice',$data);
     }
 
+    public function generateRaw(Invoice $invoice): string
+    {
+        $pdf = Pdf::loadView('pdf.invoice',[
+            'invoice' => $invoice->load('client','items'),
+        ]);
+
+        return $pdf->output();
+    }
+
     public function stream(Invoice $invoice)
     {
         $pdf = $this->generate($invoice);
