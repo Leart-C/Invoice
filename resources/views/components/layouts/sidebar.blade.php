@@ -26,6 +26,10 @@
 
             @endif
 
+            @if(!isset($item['admin_only']) || auth()->user()->role === 'admin')
+                {{-- render the link --}}
+            @endif
+
         @endforeach
 
     </nav>

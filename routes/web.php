@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\InvoiceController;
 use App\Models\Client;
 use App\Models\Invoice;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -40,4 +41,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/invoices/{invoice}/pay', fn(Invoice $invoice) => view('pages.payments.create', compact('invoice')))->name('payments.create');
     Route::get('/invoices/{invoice}', fn(Invoice $invoice) => view('pages.invoices.detail', compact('invoice')))->name('invoices.show');
     Route::get('invoices/{id}/pdf',[InvoiceController::class,'download'])->name('invoices.pdf');
+
+    //Audit
+    Route::get('/audit-logs', function(){
+        if(Auth::user()->role !== 'admin'){
+            abort(403,'Access denied.');
+        }
+        return view('pages.audit-logs.index');
+    })->name('audit-logs.index');
 });

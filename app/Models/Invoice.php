@@ -4,16 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\Auditable;
 
 class Invoice extends Model
 {
-    use HasFactory;
+    use HasFactory, Auditable;
 
     protected $fillable = [
         'client_id', 'invoice_number', 'status',
         'issue_date', 'due_date', 'subtotal',
         'tax', 'total', 'amount_paid', 'notes',
     ];
+
+    protected array $auditExclude = ['password','google_id'];
 
     protected $casts = [
         'issue_date' => 'date',
