@@ -23,7 +23,13 @@ return [
             'active' => true,
             'icon'   => 'invoices',
         ],
-        
-        
+        [
+            'label'  => 'Audit Log',
+            'route'  => 'audit-logs.index',
+            'match'  => 'audit-logs.*',
+            'active' => true,
+            'icon'   => 'audit',
+            'admin_only' => true,
+        ],
     ],
 ];
