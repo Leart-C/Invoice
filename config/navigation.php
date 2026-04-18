@@ -31,5 +31,13 @@ return [
             'icon'   => 'audit',
             'admin_only' => true,
         ],
+        [
+            'label'  => 'API Tokens',
+            'route'  => 'admin.settings.tokens',
+            'match'  => 'admin/settings/tokens',
+            'active' => true,
+            'icon'   => 'key',
+            'admin_only' => true,
+        ],
     ],
 ];

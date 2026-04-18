@@ -49,4 +49,12 @@ Route::middleware('auth')->group(function () {
         }
         return view('pages.audit-logs.index');
     })->name('audit-logs.index');
+
+    //Admin
+    Route::get('/admin/settings/tokens', function (){
+        if(Auth::user()->role !== 'admin'){
+            abort(403,'Access denied');
+        }
+        return view('pages.settings.tokens');
+    })->name('admin.settings.tokens');
 });
