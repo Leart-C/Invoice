@@ -19,4 +19,10 @@ class InvoicePolicy
     {
         return in_array($user->role,['admin','accountant']);
     }
+
+    public function recordPayment(User $user, Invoice $invoice): bool
+    {
+        return in_array($user->role, ['admin', 'accountant']);
+    }
+
 }
