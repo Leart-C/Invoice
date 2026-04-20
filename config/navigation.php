@@ -39,5 +39,13 @@ return [
             'icon'   => 'key',
             'admin_only' => true,
         ],
+        [
+            'label'  => '2FA',
+            'route'  => 'settings.two-factor',
+            'match'  => '/settings/two-factor',
+            'active' => true,
+            'icon'   => 'shield',
+            'admin_only' => true,
+        ],
     ],
 ];

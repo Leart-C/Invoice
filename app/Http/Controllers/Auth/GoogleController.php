@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Fortify\Events\TwoFactorAuthenticationChallenged;
 use Laravel\Socialite\Facades\Socialite;
 
 class GoogleController extends Controller
@@ -32,7 +33,19 @@ class GoogleController extends Controller
             ]
         );
 
+        if ($user->hasEnabledTwoFactorAuthentication()) {
+            request()->session()->put([
+                'login.id' => $user->getKey(),
+                'login.remember' => false,
+            ]);
+
+            TwoFactorAuthenticationChallenged::dispatch($user);
+
+            return redirect()->route('two-factor.login');
+        }
+
         Auth::login($user);
+        request()->session()->regenerate();
 
         return redirect()->intended(route('dashboard'));
     }
