@@ -57,4 +57,7 @@ Route::middleware('auth')->group(function () {
         }
         return view('pages.settings.tokens');
     })->name('admin.settings.tokens');
+
+    //2FA
+    Route::get('/settings/two-factor',fn()=> view('pages.settings.two-factor-manager'))->name('settings.two-factor');
 });
