@@ -1,36 +1,45 @@
-<header style="height:57px; background:white; border-bottom:1px solid #e5e7eb; display:flex; align-items:center; justify-content:space-between; padding:0 24px; position:sticky; top:0; z-index:10;">
-
-    <a href="{{ route('dashboard') }}"
-       style="font-weight:700; font-size:15px; color:#111827; text-decoration:none;">
+<header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-slate-200 bg-white px-6 shadow-sm">
+    <a
+        href="{{ route('dashboard') }}"
+        class="text-sm font-semibold tracking-tight text-slate-900 transition hover:text-blue-600"
+    >
         Invoice Tracker
     </a>
-    
-    <div style="display:flex; align-items:center; gap:12px;">
 
+    <div class="flex items-center gap-3">
         @if(auth()->user()->avatar)
-            <img src="{{ auth()->user()->avatar }}"
-                 style="width:32px; height:32px; border-radius:50%; object-fit:cover;">
+            <img
+                src="{{ auth()->user()->avatar }}"
+                alt="{{ auth()->user()->name }}"
+                class="h-9 w-9 rounded-full object-cover ring-2 ring-slate-100"
+            >
         @else
-            <div style="width:32px; height:32px; border-radius:50%; background:#dbeafe; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:13px; color:#2563eb;">
+            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 text-sm font-semibold text-blue-700 ring-2 ring-blue-50">
                 {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
             </div>
         @endif
 
-        <span style="font-size:14px; color:#374151; font-weight:500;">
-            {{ auth()->user()->name }}
-        </span>
+        <div class="hidden text-right sm:block">
+            <p class="text-sm font-medium text-slate-800">
+                {{ auth()->user()->name }}
+            </p>
+            <p class="text-xs text-slate-500">
+                Signed in
+            </p>
+        </div>
 
-        <span style="font-size:12px; background:#f3e8ff; color:#7e22ce; padding:2px 10px; border-radius:99px; font-weight:500; text-transform:capitalize;">
+        <span class="inline-flex items-center rounded-full bg-violet-100 px-3 py-1 text-xs font-semibold capitalize tracking-wide text-violet-700">
             {{ auth()->user()->role }}
         </span>
 
-        <form method="POST" action="{{ route('logout') }}" style="margin:0;">
+        <form method="POST" action="{{ route('logout') }}" class="m-0">
             @csrf
-            <button type="submit"
-                    style="font-size:13px; color:#ef4444; background:none; border:none; cursor:pointer; font-family:inherit;">
+            <button
+                type="submit"
+                class="inline-flex items-center rounded-full border border-red-200 bg-red-50 px-3 py-1.5 text-xs font-semibold text-red-600 transition hover:border-red-300 hover:bg-red-100 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-red-200"
+            >
                 Logout
             </button>
         </form>
-
     </div>
 </header>

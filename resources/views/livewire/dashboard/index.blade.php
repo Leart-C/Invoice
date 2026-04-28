@@ -1,80 +1,106 @@
-<div wire:poll.10s="loadMetrics" class="space-y-6">
+<div wire:poll.10s="loadMetrics" class="space-y-8">
 
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div class="bg-white p-4 rounded-xl shadow">
-            <p class="text-sm text-gray-500">Total Revenue</p>
-            <p class="text-xl font-bold">${{ number_format($metrics['totalRevenue'], 2) }}</p>
+    {{-- Metrics --}}
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Total Revenue</p>
+            <p class="mt-2 text-2xl font-semibold text-slate-900">
+                ${{ number_format($metrics['totalRevenue'], 2) }}
+            </p>
         </div>
 
-        <div class="bg-white p-4 rounded-xl shadow">
-            <p class="text-sm text-gray-500">Outstanding</p>
-            <p class="text-xl font-bold">${{ number_format($metrics['outstanding'], 2) }}</p>
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Outstanding</p>
+            <p class="mt-2 text-2xl font-semibold text-slate-900">
+                ${{ number_format($metrics['outstanding'], 2) }}
+            </p>
         </div>
 
-        <div class="bg-white p-4 rounded-xl shadow">
-            <p class="text-sm text-gray-500">Overdue</p>
-            <p class="text-xl font-bold">{{ $metrics['overdue'] }}</p>
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Overdue</p>
+            <p class="mt-2 text-2xl font-semibold text-slate-900">
+                {{ $metrics['overdue'] }}
+            </p>
         </div>
 
-        <div class="bg-white p-4 rounded-xl shadow">
-            <p class="text-sm text-gray-500">Clients</p>
-            <p class="text-xl font-bold">{{ $metrics['clients'] }}</p>
+        <div class="rounded-2xl bg-white p-5 shadow-sm">
+            <p class="text-xs font-medium uppercase tracking-wide text-slate-500">Clients</p>
+            <p class="mt-2 text-2xl font-semibold text-slate-900">
+                {{ $metrics['clients'] }}
+            </p>
+        </div>
+    </div>
+
+    {{-- Insights --}}
+    <div class="grid grid-cols-1 gap-6 xl:grid-cols-2">
+        <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <h3 class="text-base font-semibold text-slate-800">Revenue Overview</h3>
+
+            <div class="mt-5 space-y-3 text-sm">
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-500">This Month</span>
+                    <span class="font-medium text-slate-900">
+                        ${{ number_format($revenueComparison['thisMonth'], 2) }}
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <span class="text-slate-500">Last Month</span>
+                    <span class="font-medium text-slate-900">
+                        ${{ number_format($revenueComparison['lastMonth'], 2) }}
+                    </span>
+                </div>
+
+                <div class="flex items-center justify-between border-t border-slate-100 pt-3">
+                    <span class="text-slate-600">Difference</span>
+                    <span class="text-base font-semibold text-slate-900">
+                        ${{ number_format($revenueComparison['difference'], 2) }}
+                    </span>
+                </div>
+            </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="rounded-2xl bg-white p-6 shadow-sm">
+            <h3 class="text-base font-semibold text-slate-800">Top Clients</h3>
 
-
-            <div class="bg-white p-5 rounded-xl shadow">
-                <h3 class="font-semibold text-gray-700 mb-3">Revenue</h3>
-
-                <div class="space-y-2 text-sm">
-                    <div class="flex justify-between">
-                        <span>This Month</span>
-                        <span class="font-medium">${{ number_format($revenueComparison['thisMonth'], 2) }}</span>
-                    </div>
-
-                    <div class="flex justify-between">
-                        <span>Last Month</span>
-                        <span class="font-medium">${{ number_format($revenueComparison['lastMonth'], 2) }}</span>
-                    </div>
-
-                    <div class="flex justify-between border-t pt-2">
-                        <span>Difference</span>
-                        <span class="font-bold">
-                            ${{ number_format($revenueComparison['difference'], 2) }}
+            <div class="mt-5 space-y-3">
+                @forelse($topClients as $client)
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3 text-sm last:border-b-0 last:pb-0">
+                        <span class="text-slate-700">{{ $client->name }}</span>
+                        <span class="font-medium text-slate-900">
+                            ${{ number_format($client->balance, 2) }}
                         </span>
                     </div>
-                </div>
+                @empty
+                    <p class="text-sm text-slate-400">No client balances available.</p>
+                @endforelse
             </div>
+        </div>
+    </div>
 
-            <div class="bg-white p-5 rounded-xl shadow">
-                <h3 class="font-semibold text-gray-700 mb-3">Top Clients</h3>
-
-                <div class="space-y-2">
-                    @foreach($topClients as $client)
-                    <div class="flex justify-between text-sm">
-                        <span>{{ $client->name }}</span>
-                        <span class="font-medium">${{ number_format($client->balance, 2) }}</span>
-                    </div>
-                    @endforeach
-                </div>
-            </div>
-
+    {{-- Due Soon --}}
+    <div class="rounded-2xl bg-white p-6 shadow-sm">
+        <div class="flex items-center justify-between">
+            <h3 class="text-base font-semibold text-slate-800">Due Soon</h3>
+            <span class="text-sm text-slate-400">Next 7 days</span>
         </div>
 
-        <div class="bg-white p-5 rounded-xl shadow">
-            <h3 class="font-semibold text-gray-700 mb-3">Due Soon (Next 7 Days)</h3>
-
+        <div class="mt-5 space-y-3">
             @forelse($dueSoonInvoices as $invoice)
-            <div class="flex justify-between text-sm border-b py-2">
-                <span>{{ $invoice->invoice_number }}</span>
-                <span class="text-red-500">
-                    {{ $invoice->due_date->format('M d') }}
-                </span>
-            </div>
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3 text-sm last:border-b-0 last:pb-0">
+                    <div>
+                        <p class="font-medium text-slate-900">{{ $invoice->invoice_number }}</p>
+                        <p class="text-slate-500">{{ $invoice->client->name }}</p>
+                    </div>
+
+                    <span class="font-medium text-red-500">
+                        {{ $invoice->due_date->format('M d') }}
+                    </span>
+                </div>
             @empty
-            <p class="text-sm text-gray-400">No upcoming invoices</p>
+                <p class="text-sm text-slate-400">No upcoming invoices.</p>
             @endforelse
         </div>
-
     </div>
+
+</div>
